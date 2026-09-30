@@ -42,20 +42,20 @@ public class DataSeeder {
                     new BigDecimal("29.90"), brasileira, true,
                     "Arroz, feijão tropeiro, vinagrete e espetinho"), pratos);
             salvarSeAusente(new Hamburguer(
-                    "Hambúrguer caseiro",
-                    "Hambúrguer artesanal servido no pão.",
+                    "Salada classico",
+                    "Hambúrguer artesanal 180g.",
                     new BigDecimal("24.90"), brasileira, true,
-                    "Tradicional: carne, queijo, alface e tomate"), pratos);
+                    "Tradicional: blend de carne, queijo, alface e tomate"), pratos);
             salvarSeAusente(new Hamburguer(
-                    "Hambúrguer caseiro",
-                    "Hambúrguer artesanal servido no pão.",
+                    "Salada moderno",
+                    "Hambúrguer artesanal 180g.",
                     new BigDecimal("27.90"), brasileira, true,
-                    "Bacon: carne, queijo, bacon, alface e tomate"), pratos);
+                    "Bacon: Blend de carne, prato, bacon crocante, rúcula, cebola roxa marinada no azeite"), pratos);
             salvarSeAusente(new Hamburguer(
-                    "Hambúrguer caseiro",
+                    "Cheddar crocante",
                     "Hambúrguer artesanal servido no pão.",
-                    new BigDecimal("31.90"), brasileira, true,
-                    "Especial: duas carnes, queijo, bacon, ovo e salada"), pratos);
+                    new BigDecimal("0.00"), brasileira, true,
+                    "Especial: Blend de carne, cheddar, bacon crocante e cebola caramelizada"), pratos);
         };
     }
 
