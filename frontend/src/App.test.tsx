@@ -43,6 +43,7 @@ describe('App', () => {
     expect(await screen.findByText('Risoto de camarão')).toBeInTheDocument()
     expect(screen.getByText('Jantinha brasileira')).toBeInTheDocument()
     expect(screen.queryByText(/Cozinha (Italiana|Brasileira)/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/R\$/)).not.toBeInTheDocument()
 
     await usuario.click(screen.getByRole('button', { name: 'Porções' }))
 

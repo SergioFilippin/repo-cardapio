@@ -3,11 +3,6 @@ import { carregarCardapio } from './api'
 import { filtrarPratos } from './filter'
 import type { Prato, TipoPrato } from './types'
 
-const moeda = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL',
-})
-
 const nomesTipo: Record<TipoPrato, string> = {
   LASANHA: 'Lasanha',
   RISOTO: 'Risoto',
@@ -61,7 +56,7 @@ function App() {
       <header className="topo">
         <a className="marca" href="#inicio" aria-label="Casa de Dentro, início">
           <span className="marca-selo" aria-hidden="true">CD</span>
-          <span>Casa de Dentro</span>
+          <span>Restaurante do Sérgio</span>
         </a>
         <a className="link-cardapio" href="#cardapio">Ver o cardápio ↓</a>
       </header>
@@ -72,8 +67,7 @@ function App() {
             <p className="sobretitulo">Cozinha de afeto · desde sempre</p>
             <h1 id="titulo-principal">Tem lugar<br />à mesa.</h1>
             <p className="hero-resumo">
-              Receitas que atravessam fronteiras, preparadas sem pressa e
-              servidas como domingo em família.
+              Receitas que gosto de preparar para pessoas que amo.
             </p>
           </div>
           <div className="hero-prato" aria-hidden="true">
@@ -82,7 +76,7 @@ function App() {
               <span className="folha folha-b" />
               <span className="molho" />
             </div>
-            <p>feito aqui<br /><strong>com tempo</strong></p>
+            <p>sz<br /><strong>:D</strong></p>
           </div>
           <div className="hero-rodape">
             <span>01</span>
@@ -164,10 +158,9 @@ function App() {
                   <h3>{prato.nome}</h3>
                   <p className="descricao">{prato.descricao}</p>
                   <p className="detalhe"><span aria-hidden="true">✦</span> {prato.detalhe}</p>
-                  {(prato.preco !== null || !prato.disponivel) && (
+                  {!prato.disponivel && (
                     <div className="prato-rodape">
-                      {prato.preco !== null && <strong>{moeda.format(prato.preco)}</strong>}
-                      {!prato.disponivel && <span className="aviso">Indisponível hoje</span>}
+                      <span className="aviso">Indisponível hoje</span>
                     </div>
                   )}
                 </article>
