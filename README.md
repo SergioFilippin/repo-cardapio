@@ -71,13 +71,14 @@ Exemplo de criacao:
 }
 ```
 
-Os tipos aceitos sao `LASANHA`, `RISOTO`, `JANTINHA` e `HAMBURGUER`.
+Os tipos aceitos sao `LASANHA`, `RISOTO`, `JANTINHA`, `HAMBURGUER` e `PORCAO`.
+O campo `preco` pode ser `null` quando o valor ainda nao estiver definido; nesse caso, o frontend nao exibe preco.
 
 ## POO no backend
 
 - **Encapsulamento:** os atributos do dominio sao privados e alterados por metodos que protegem suas invariantes.
 - **Abstracao:** `Prato` concentra os dados e contratos comuns.
-- **Heranca:** `Lasanha`, `Risoto`, `Jantinha` e `Hamburguer` especializam `Prato`.
+- **Heranca:** `Lasanha`, `Risoto`, `Jantinha`, `Hamburguer` e `Porcao` especializam `Prato`.
 - **Polimorfismo:** cada subtipo implementa `getTipo()`, `getDetalhe()` e `setDetalhe()`; o servico e os DTOs trabalham com a abstracao `Prato`.
 
 ## Testes

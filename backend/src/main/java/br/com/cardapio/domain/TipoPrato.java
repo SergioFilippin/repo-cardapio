@@ -4,5 +4,6 @@ public enum TipoPrato {
     LASANHA,
     RISOTO,
     JANTINHA,
-    HAMBURGUER
+    HAMBURGUER,
+    PORCAO
 }

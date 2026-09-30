@@ -33,7 +33,7 @@ public abstract class Prato {
     @Column(nullable = false, length = 500)
     private String descricao;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal preco;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -111,8 +111,8 @@ public abstract class Prato {
     }
 
     public void setPreco(BigDecimal preco) {
-        if (preco == null || preco.signum() < 0) {
-            throw new IllegalArgumentException("O preço não pode ser negativo ou nulo.");
+        if (preco != null && preco.signum() < 0) {
+            throw new IllegalArgumentException("O preço não pode ser negativo.");
         }
         this.preco = preco;
     }

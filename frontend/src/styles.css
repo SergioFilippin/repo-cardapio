@@ -119,18 +119,12 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .filtros { display: flex; gap: 0.5rem; margin-top: 1.2rem; padding: 0.2rem 0.2rem 0.5rem; overflow-x: auto; }
 .filtros button, .mensagem button { border: 1px solid var(--vinho); border-radius: 100px; padding: 0.65rem 1rem; color: var(--vinho); background: transparent; font-size: 0.72rem; font-weight: 800; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; transition: 180ms ease; }
 .filtros button:hover, .filtros button.ativo { color: var(--papel); background: var(--vinho); }
-.grupo + .grupo { margin-top: 4.5rem; }
-.grupo-titulo { display: grid; grid-template-columns: auto 1fr auto; gap: 0.8rem; align-items: center; margin-bottom: 1.25rem; color: var(--vinho); }
-.grupo-titulo::after { content: ""; grid-column: 2; grid-row: 2; border-top: 1px solid var(--linha); }
-.grupo-titulo > span { font-size: 0.63rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
-.grupo-titulo > span:last-child { color: #6e5d50; }
-.grupo h3 { margin: 0; font-family: Georgia, serif; font-size: clamp(1.8rem, 8vw, 3rem); font-weight: 400; letter-spacing: -0.04em; }
 .grade-pratos { display: grid; gap: 0.8rem; }
 .prato { position: relative; min-height: 20rem; display: flex; flex-direction: column; padding: 1.25rem; overflow: hidden; border: 1px solid rgba(90,66,48,0.18); background: var(--papel); box-shadow: 0 0.4rem 0 rgba(87,57,34,0.07); transition: transform 180ms ease, box-shadow 180ms ease; }
 .prato::after { content: ""; position: absolute; right: -2rem; bottom: -3rem; width: 8rem; height: 8rem; border: 1px solid rgba(125,33,31,0.14); border-radius: 50%; box-shadow: 0 0 0 1rem rgba(125,33,31,0.035), 0 0 0 2rem rgba(125,33,31,0.025); }
 .prato:hover { transform: translateY(-3px) rotate(-0.25deg); box-shadow: 0 0.7rem 0 rgba(87,57,34,0.1); }
 .prato-meta { display: flex; justify-content: space-between; color: var(--vinho); font-size: 0.62rem; font-weight: 850; text-transform: uppercase; letter-spacing: 0.13em; }
-.prato h4 { max-width: 14ch; margin: 2rem 0 0.85rem; color: var(--vinho-escuro); font-family: Georgia, serif; font-size: 2rem; font-weight: 400; line-height: 0.98; letter-spacing: -0.045em; }
+.prato h3 { max-width: 14ch; margin: 2rem 0 0.85rem; color: var(--vinho-escuro); font-family: Georgia, serif; font-size: 2rem; font-weight: 400; line-height: 0.98; letter-spacing: -0.045em; }
 .descricao { max-width: 36rem; margin: 0; color: #51473e; font-size: 0.9rem; line-height: 1.55; }
 .detalhe { margin: 1.3rem 0; color: #766454; font-family: Georgia, serif; font-size: 0.82rem; font-style: italic; }
 .detalhe span { color: var(--mostarda); }
@@ -138,7 +132,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .prato-rodape strong { color: var(--vinho); font-family: Georgia, serif; font-size: 1.45rem; font-weight: 400; }
 .aviso { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
 .prato.indisponivel { background: #e5dccd; }
-.prato.indisponivel h4, .prato.indisponivel .descricao, .prato.indisponivel .detalhe { opacity: 0.65; }
+.prato.indisponivel h3, .prato.indisponivel .descricao, .prato.indisponivel .detalhe { opacity: 0.65; }
 .carregando { display: grid; gap: 0.8rem; }
 .carregando > span { display: block; height: 20rem; background: linear-gradient(100deg, #e6dac6 20%, #f8f0e1 40%, #e6dac6 60%); background-size: 200% 100%; animation: pulso 1.4s infinite; }
 @keyframes pulso { to { background-position-x: -200%; } }

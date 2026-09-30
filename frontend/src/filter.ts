@@ -1,4 +1,4 @@
-import type { Prato } from './types'
+import type { Prato, TipoPrato } from './types'
 
 const normalizar = (texto: string) =>
   texto
@@ -10,17 +10,16 @@ const normalizar = (texto: string) =>
 export function filtrarPratos(
   pratos: Prato[],
   busca: string,
-  nacionalidade: string,
+  tipo: TipoPrato | '',
 ) {
   const termo = normalizar(busca)
 
   return pratos.filter((prato) => {
-    const correspondeNacionalidade =
-      !nacionalidade || prato.nacionalidade === nacionalidade
+    const correspondeTipo = !tipo || prato.tipo === tipo
     const conteudo = normalizar(
       `${prato.nome} ${prato.descricao} ${prato.detalhe} ${prato.tipo}`,
     )
 
-    return correspondeNacionalidade && (!termo || conteudo.includes(termo))
+    return correspondeTipo && (!termo || conteudo.includes(termo))
   })
 }

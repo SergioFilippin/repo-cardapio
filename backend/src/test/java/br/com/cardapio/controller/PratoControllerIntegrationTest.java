@@ -29,7 +29,7 @@ class PratoControllerIntegrationTest {
     void deveListarCardapioInicial() throws Exception {
         mockMvc.perform(get("/api/pratos"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(7)))
+                .andExpect(jsonPath("$", hasSize(10)))
                 .andExpect(jsonPath("$[0].id").isNumber())
                 .andExpect(jsonPath("$[0].tipo").isString())
                 .andExpect(jsonPath("$[0].detalhe").isNotEmpty())
@@ -91,5 +91,26 @@ class PratoControllerIntegrationTest {
                 .andExpect(jsonPath("$.preco", is(45.5)))
                 .andExpect(jsonPath("$.nacionalidade", is("Italiana")))
                 .andExpect(jsonPath("$.detalhe", is("Limão siciliano")));
+    }
+
+    @Test
+    void deveCriarPorcaoSemPreco() throws Exception {
+        mockMvc.perform(post("/api/pratos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "tipo": "PORCAO",
+                                  "nome": "Mandioca frita",
+                                  "descricao": "Mandioca crocante preparada na hora.",
+                                  "preco": null,
+                                  "nacionalidade": "Brasileira",
+                                  "detalhe": "Porção tamanho único",
+                                  "disponivel": true
+                                }
+                                """))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.tipo", is("PORCAO")))
+                .andExpect(jsonPath("$.preco").value(org.hamcrest.Matchers.nullValue()))
+                .andExpect(jsonPath("$.nacionalidade", is("Brasileira")));
     }
 }

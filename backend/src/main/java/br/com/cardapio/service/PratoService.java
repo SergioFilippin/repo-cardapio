@@ -4,6 +4,7 @@ import br.com.cardapio.domain.Hamburguer;
 import br.com.cardapio.domain.Jantinha;
 import br.com.cardapio.domain.Lasanha;
 import br.com.cardapio.domain.Nacionalidade;
+import br.com.cardapio.domain.Porcao;
 import br.com.cardapio.domain.Prato;
 import br.com.cardapio.domain.Risoto;
 import br.com.cardapio.dto.PratoRequest;
@@ -68,6 +69,8 @@ public class PratoService {
             case JANTINHA -> new Jantinha(request.nome(), request.descricao(), request.preco(),
                     nacionalidade, request.disponivel(), request.detalhe());
             case HAMBURGUER -> new Hamburguer(request.nome(), request.descricao(), request.preco(),
+                    nacionalidade, request.disponivel(), request.detalhe());
+            case PORCAO -> new Porcao(request.nome(), request.descricao(), request.preco(),
                     nacionalidade, request.disponivel(), request.detalhe());
         };
         return PratoResponse.from(pratoRepository.save(prato));

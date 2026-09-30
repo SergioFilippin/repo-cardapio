@@ -1,17 +1,12 @@
-export type TipoPrato = 'LASANHA' | 'RISOTO' | 'JANTINHA' | 'HAMBURGUER'
+export type TipoPrato = 'LASANHA' | 'RISOTO' | 'JANTINHA' | 'HAMBURGUER' | 'PORCAO'
 
 export interface Prato {
   id: number
   tipo: TipoPrato
   nome: string
   descricao: string
-  preco: number
+  preco: number | null
   nacionalidade: string
   detalhe: string
   disponivel: boolean
-}
-
-export interface Nacionalidade {
-  id: number
-  nome: string
 }

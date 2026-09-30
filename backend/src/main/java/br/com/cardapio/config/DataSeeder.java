@@ -4,6 +4,7 @@ import br.com.cardapio.domain.Hamburguer;
 import br.com.cardapio.domain.Jantinha;
 import br.com.cardapio.domain.Lasanha;
 import br.com.cardapio.domain.Nacionalidade;
+import br.com.cardapio.domain.Porcao;
 import br.com.cardapio.domain.Prato;
 import br.com.cardapio.domain.Risoto;
 import br.com.cardapio.repository.NacionalidadeRepository;
@@ -11,6 +12,7 @@ import br.com.cardapio.repository.PratoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.math.BigDecimal;
 
@@ -19,8 +21,11 @@ public class DataSeeder {
 
     @Bean
     CommandLineRunner carregarCardapio(NacionalidadeRepository nacionalidades,
-                                        PratoRepository pratos) {
+                                        PratoRepository pratos,
+                                        JdbcTemplate jdbcTemplate) {
         return args -> {
+            jdbcTemplate.execute("alter table pratos alter column preco drop not null");
+
             Nacionalidade italiana = obterNacionalidade("Italiana", nacionalidades);
             Nacionalidade brasileira = obterNacionalidade("Brasileira", nacionalidades);
 
@@ -56,6 +61,18 @@ public class DataSeeder {
                     "Hambúrguer artesanal servido no pão.",
                     new BigDecimal("0.00"), brasileira, true,
                     "Especial: Blend de carne, cheddar, bacon crocante e cebola caramelizada"), pratos);
+            salvarSeAusente(new Porcao(
+                    "Batata frita",
+                    "Batatas douradas e crocantes, preparadas na hora.",
+                    null, brasileira, true, "Porção tamanho único"), pratos);
+            salvarSeAusente(new Porcao(
+                    "Batata com queijo",
+                    "Batatas fritas cobertas com queijo derretido.",
+                    null, brasileira, true, "Porção tamanho único"), pratos);
+            salvarSeAusente(new Porcao(
+                    "Batata com cheddar",
+                    "Batatas fritas cobertas com cheddar cremoso.",
+                    null, brasileira, true, "Porção tamanho único"), pratos);
         };
     }
 
@@ -65,7 +82,7 @@ public class DataSeeder {
     }
 
     private void salvarSeAusente(Prato prato, PratoRepository repository) {
-        if (!repository.existsByNomeAndPreco(prato.getNome(), prato.getPreco())) {
+        if (!repository.existsByNomeIgnoreCase(prato.getNome())) {
             repository.save(prato);
         }
     }

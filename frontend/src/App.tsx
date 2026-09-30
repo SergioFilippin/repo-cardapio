@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { carregarCardapio } from './api'
 import { filtrarPratos } from './filter'
-import type { Nacionalidade, Prato, TipoPrato } from './types'
+import type { Prato, TipoPrato } from './types'
 
 const moeda = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -13,15 +13,23 @@ const nomesTipo: Record<TipoPrato, string> = {
   RISOTO: 'Risoto',
   JANTINHA: 'Jantinha',
   HAMBURGUER: 'Hambúrguer',
+  PORCAO: 'Porção',
 }
+
+const categorias: { tipo: TipoPrato; nome: string }[] = [
+  { tipo: 'LASANHA', nome: 'Lasanhas' },
+  { tipo: 'RISOTO', nome: 'Risotos' },
+  { tipo: 'JANTINHA', nome: 'Jantinhas' },
+  { tipo: 'HAMBURGUER', nome: 'Hambúrgueres' },
+  { tipo: 'PORCAO', nome: 'Porções' },
+]
 
 type Estado = 'carregando' | 'sucesso' | 'erro'
 
 function App() {
   const [pratos, setPratos] = useState<Prato[]>([])
-  const [nacionalidades, setNacionalidades] = useState<Nacionalidade[]>([])
   const [busca, setBusca] = useState('')
-  const [filtro, setFiltro] = useState('')
+  const [filtro, setFiltro] = useState<TipoPrato | ''>('')
   const [estado, setEstado] = useState<Estado>('carregando')
   const [tentativa, setTentativa] = useState(0)
 
@@ -31,8 +39,7 @@ function App() {
 
     carregarCardapio(controller.signal)
       .then((dados) => {
-        setPratos(dados.pratos)
-        setNacionalidades(dados.nacionalidades)
+        setPratos(dados)
         setEstado('sucesso')
       })
       .catch((erro: unknown) => {
@@ -44,10 +51,6 @@ function App() {
   }, [tentativa])
 
   const filtrados = filtrarPratos(pratos, busca, filtro)
-  const grupos = filtrados.reduce<Record<string, Prato[]>>((resultado, prato) => {
-    ;(resultado[prato.nacionalidade] ??= []).push(prato)
-    return resultado
-  }, {})
   const limparFiltros = () => {
     setBusca('')
     setFiltro('')
@@ -110,7 +113,7 @@ function App() {
                 onChange={(evento) => setBusca(evento.target.value)}
               />
             </label>
-            <div className="filtros" role="group" aria-label="Filtrar por nacionalidade">
+            <div className="filtros" role="group" aria-label="Filtrar por categoria">
               <button
                 className={!filtro ? 'ativo' : ''}
                 type="button"
@@ -119,15 +122,15 @@ function App() {
               >
                 Todas
               </button>
-              {nacionalidades.map((nacionalidade) => (
+              {categorias.map((categoria) => (
                 <button
-                  className={filtro === nacionalidade.nome ? 'ativo' : ''}
+                  className={filtro === categoria.tipo ? 'ativo' : ''}
                   type="button"
-                  aria-pressed={filtro === nacionalidade.nome}
-                  onClick={() => setFiltro(nacionalidade.nome)}
-                  key={nacionalidade.id}
+                  aria-pressed={filtro === categoria.tipo}
+                  onClick={() => setFiltro(categoria.tipo)}
+                  key={categoria.tipo}
                 >
-                  {nacionalidade.nome}
+                  {categoria.nome}
                 </button>
               ))}
             </div>
@@ -151,32 +154,23 @@ function App() {
             />
           )}
           {estado === 'sucesso' && filtrados.length > 0 && (
-            <div className="grupos">
-              {Object.entries(grupos).map(([nacionalidade, itens], indiceGrupo) => (
-                <section className="grupo" key={nacionalidade} aria-labelledby={`grupo-${indiceGrupo}`}>
-                  <div className="grupo-titulo">
-                    <span>{String(indiceGrupo + 1).padStart(2, '0')}</span>
-                    <h3 id={`grupo-${indiceGrupo}`}>Cozinha {nacionalidade}</h3>
-                    <span>{itens.length} {itens.length === 1 ? 'receita' : 'receitas'}</span>
+            <div className="grade-pratos">
+              {filtrados.map((prato, indice) => (
+                <article className={`prato ${!prato.disponivel ? 'indisponivel' : ''}`} key={prato.id}>
+                  <div className="prato-meta">
+                    <span>{nomesTipo[prato.tipo]}</span>
+                    <span>{String(indice + 1).padStart(2, '0')}</span>
                   </div>
-                  <div className="grade-pratos">
-                    {itens.map((prato, indice) => (
-                      <article className={`prato ${!prato.disponivel ? 'indisponivel' : ''}`} key={prato.id}>
-                        <div className="prato-meta">
-                          <span>{nomesTipo[prato.tipo]}</span>
-                          <span>{String(indice + 1).padStart(2, '0')}</span>
-                        </div>
-                        <h4>{prato.nome}</h4>
-                        <p className="descricao">{prato.descricao}</p>
-                        <p className="detalhe"><span aria-hidden="true">✦</span> {prato.detalhe}</p>
-                        <div className="prato-rodape">
-                          <strong>{moeda.format(prato.preco)}</strong>
-                          {!prato.disponivel && <span className="aviso">Indisponível hoje</span>}
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </section>
+                  <h3>{prato.nome}</h3>
+                  <p className="descricao">{prato.descricao}</p>
+                  <p className="detalhe"><span aria-hidden="true">✦</span> {prato.detalhe}</p>
+                  {(prato.preco !== null || !prato.disponivel) && (
+                    <div className="prato-rodape">
+                      {prato.preco !== null && <strong>{moeda.format(prato.preco)}</strong>}
+                      {!prato.disponivel && <span className="aviso">Indisponível hoje</span>}
+                    </div>
+                  )}
+                </article>
               ))}
             </div>
           )}

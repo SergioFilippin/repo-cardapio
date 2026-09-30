@@ -1,4 +1,4 @@
-import type { Nacionalidade, Prato } from './types'
+import type { Prato } from './types'
 
 const baseUrl = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
 
@@ -16,8 +16,5 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
 }
 
 export function carregarCardapio(signal?: AbortSignal) {
-  return Promise.all([
-    getJson<Prato[]>('/api/pratos', signal),
-    getJson<Nacionalidade[]>('/api/nacionalidades', signal),
-  ]).then(([pratos, nacionalidades]) => ({ pratos, nacionalidades }))
+  return getJson<Prato[]>('/api/pratos', signal)
 }

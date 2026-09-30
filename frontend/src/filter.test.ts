@@ -14,6 +14,16 @@ const pratos: Prato[] = [
     disponivel: true,
   },
   {
+    id: 3,
+    tipo: 'PORCAO',
+    nome: 'Batata com cheddar',
+    descricao: 'Batatas fritas com cheddar cremoso',
+    preco: null,
+    nacionalidade: 'Brasileira',
+    detalhe: 'Porção tamanho único',
+    disponivel: true,
+  },
+  {
     id: 2,
     tipo: 'JANTINHA',
     nome: 'Jantinha brasileira',
@@ -30,8 +40,8 @@ describe('filtrarPratos', () => {
     expect(filtrarPratos(pratos, 'CAMARAO', '')).toEqual([pratos[0]])
   })
 
-  it('combina busca por ingrediente e nacionalidade', () => {
-    expect(filtrarPratos(pratos, 'feijao', 'Brasileira')).toEqual([pratos[1]])
-    expect(filtrarPratos(pratos, 'feijao', 'Italiana')).toEqual([])
+  it('combina busca por ingrediente e categoria', () => {
+    expect(filtrarPratos(pratos, 'cheddar', 'PORCAO')).toEqual([pratos[1]])
+    expect(filtrarPratos(pratos, 'cheddar', 'RISOTO')).toEqual([])
   })
 })

@@ -21,7 +21,6 @@ public record PratoRequest(
         @Size(max = 500, message = "descrição deve ter no máximo 500 caracteres")
         String descricao,
 
-        @NotNull(message = "preço é obrigatório")
         @DecimalMin(value = "0.00", message = "preço não pode ser negativo")
         @Digits(integer = 8, fraction = 2, message = "preço deve ter no máximo 8 inteiros e 2 decimais")
         BigDecimal preco,
