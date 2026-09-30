@@ -65,7 +65,7 @@ public class DataSeeder {
     }
 
     private void salvarSeAusente(Prato prato, PratoRepository repository) {
-        if (!repository.existsByNomeAndPreco(prato.getNome(), prato.getPreco())) {
+        if (!repository.existsByNomeIgnoreCase(prato.getNome())) {
             repository.save(prato);
         }
     }
